@@ -23,11 +23,30 @@ import {
 } from "@/components/ui/sidebar"
 import { useAuthStore } from "@/store/auth-person.store"
 import { LogOut, UserCircle } from "lucide-react"
+import Swal from "sweetalert2"
 
 export function NavUser() {
     const person = useAuthStore(state => state.auth);
+    const logaut = useAuthStore(state => state.logaut);
 
     const { isMobile } = useSidebar()
+
+    const confirmLogout = () => {
+        Swal.fire({
+            title: "confirmação?",
+            text: "Tens certeza que sedejas sair!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Confirmo"
+        }).then((result) => {
+            if (result.isConfirmed) {
+               logaut();
+            }
+        });
+    }
 
     return (
         <SidebarMenu className="border rounded-2xl">
@@ -77,8 +96,8 @@ export function NavUser() {
                                 Conta
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <LogOut />
+                            <DropdownMenuItem className="text-red-500" onClick={confirmLogout}>
+                                <LogOut className="text-red-500" />
                                 Sair
                             </DropdownMenuItem>
                         </DropdownMenuGroup>

@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { UserCheck, UserMinus, UserPen, UserPlus } from "lucide-react";
+import { useAuthStore } from "@/store/auth-person.store";
 
 const features = [
   {
@@ -36,7 +37,7 @@ const features = [
 ];
 
 export default function HomePage() {
-  const btn = "rounded-full w-auto md:min-w-[200px] p-8 text-2xl cursor-pointer";
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated());
 
   return (
     <>
@@ -58,12 +59,16 @@ export default function HomePage() {
             Este sistema é uma aplicação web completa projetada para gerenciar utilizadores de forma eficiente, permitindo operações CRUD (Create, Read, Update, Delete). Ele oferece uma interface intuitiva para a criação, visualização, edição e exclusão de registos de utilizadores, otimizando o fluxo de trabalho de administração e manutenção de dados
           </div>
           <div className="flex gap-3 md:gap-10 md:flex-row">
-            <NavLink to="/login">
-              <Button className={btn} size="lg">Login</Button>
-            </NavLink>
-            <NavLink to="/register">
-              <Button className={btn} variant="outline" size="lg">Registro</Button>
-            </NavLink>
+            {isAuthenticated ? (
+              <NavLink to="/profile">
+                <Button className="rounded-full w-auto md:min-w-[200px] p-8 text-2xl cursor-pointer" size="lg">Painel</Button>
+              </NavLink>
+            ) : (
+              <NavLink to="/login">
+                <Button className="rounded-full w-auto md:min-w-[200px] p-8 text-2xl cursor-pointer" size="lg">Login</Button>
+              </NavLink>
+            )}
+
           </div>
           <div className="my-5  px-5 md:px-15 lg:px-25">
             <div className="mb-8 font-lexend text-xl">Fucionalidades</div>

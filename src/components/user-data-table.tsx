@@ -7,15 +7,21 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import type { PersonPageable } from "@/model/PersonPageable";
+
 import PersonService from "@/service/PersonService";
-import { Loader2Icon } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import type { PersonPageable } from "@/model/PersonPageable";
 import { useEffect, useMemo, useState } from "react";
-import { Input } from "./ui/input";
 import { UserDialogForm } from "./user-dialog-form";
 import type { Person } from "@/model/Person";
+import { Loader2Icon, Repeat1 } from "lucide-react";
+import { Input } from "./ui/input";
+import debounce from "lodash.debounce";
+import Swal from "sweetalert2";
+import { Button } from "./ui/button";
 
 export default function UserDataTable() {
+    const [field, setField] = useState('');
     const [loading, setLoading] = useState(true);
     const [personPageable, setlPersonPageable] = useState({ users: [], skip: 0, limit: 0, total: 0 } as PersonPageable);
 
@@ -28,6 +34,19 @@ export default function UserDataTable() {
         }).finally(() => setLoading(false))
     }
 
+    const fetchQuery = (it: string) => {
+        if (field.trim() == "") {
+            Swal.fire({ icon: 'warning', title: "Aviso", text: "Informa o campo a pesquisar" });
+            return;
+        }
+        setLoading(true);
+        personService.getPageableFilter(field, it).then(i => {
+            setlPersonPageable(i);
+        }).finally(() => setLoading(false))
+    }
+
+    const debouncedChangeHandler = debounce((it) => fetchQuery(it), 1000);
+
     useEffect(() => { getPersons(); }, []);
 
     if (loading) return <LoaderUsers />
@@ -35,10 +54,25 @@ export default function UserDataTable() {
     return (
         <section className="mx-4">
             <div className="inline-flex gap-4 mb-5 justify-end w-full">
-                <Input className="md:w-[300px]" />
+                <Button onClick={getPersons}>
+                    <Repeat1 />
+                </Button>
+                <Select value={field} onValueChange={(e) => setField(e)}>
+                    <SelectTrigger id="field" className="col-span-3">
+                        <SelectValue placeholder="Campos" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="username">Nome de usuário</SelectItem>
+                        <SelectItem value="firstName">Primeiro nome</SelectItem>
+                        <SelectItem value="lastName">Último nome</SelectItem>
+                        <SelectItem value="email">Email</SelectItem>
+                        <SelectItem value="birthDate">Nascimento</SelectItem>
+                    </SelectContent>
+                </Select>
+                <Input className="md:w-[300px]" onChange={(e) => debouncedChangeHandler(e.target.value)} />
                 <UserDialogForm person={
                     { id: -1, firstName: "", lastName: "", gender: "", email: "", image: "", birthDate: "", username: "", } as Person
-                } action="CREATE" />
+                } action="CREATE" pageable={personPageable} onPageable={setlPersonPageable} />
             </div>
             <div className="rounded-md border overflow-hidden">
                 <Table>
@@ -79,11 +113,11 @@ export default function UserDataTable() {
                                     <TableCell>{user.gender}</TableCell>
                                     <TableCell className="text-right">{user.birthDate}</TableCell>
                                     <TableCell className="text-center">
-                                        <UserDialogForm person={user} action="UPDATE"/>
+                                        <UserDialogForm person={user} action="UPDATE" pageable={personPageable} onPageable={setlPersonPageable} />
                                     </TableCell>
                                     <TableCell className="text-center">
-                                        <UserDialogForm person={user} action="DELETE"/>
-                                    </TableCell>                                    
+                                        <UserDialogForm person={user} action="DELETE" pageable={personPageable} onPageable={setlPersonPageable} />
+                                    </TableCell>
                                 </TableRow>
                             ))
                         )}
