@@ -1,9 +1,18 @@
 import { Button } from "./ui/button";
 
-export default function ButtonApk() {
-    return (
-        <a href="/public/app-release.apk">
-            <Button className="rounded-full md:min-w-[200px] p-6 text-xl bg-black" size="lg" >Baixar o APK</Button>
-        </a>
-    )
+const handleDownload = () => {
+  const link = document.createElement("a");
+  link.href = "/public/app-release.apk";
+  link.setAttribute("download", "my-app.apk");
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+};
+
+export default function DownloadButton() {
+  return (
+    <Button onClick={handleDownload}>
+      Baixar APK
+    </Button>
+  );
 }
