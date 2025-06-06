@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card"
 import { UserCheck, UserMinus, UserPen, UserPlus } from "lucide-react";
 import { useAuthStore } from "@/store/auth-person.store";
+import ButtonApk from "@/components/button-apk";
 
 const features = [
   {
@@ -46,9 +47,7 @@ export default function HomePage() {
           CRUDPERSON
         </div>
         <div>
-          <NavLink to="/login">
-            <Button className="rounded-full md:min-w-[200px] p-6 text-xl bg-black" size="lg" >Baixar o APK</Button>
-          </NavLink>
+          <ButtonApk/>
         </div>
       </nav>
       <section className="flex flex-col h-screen items-center justify-center">

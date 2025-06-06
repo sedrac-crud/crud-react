@@ -17,7 +17,7 @@ export default function LoginPage() {
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
-            <svg aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full fill-neutral-400/80 [mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]"><defs><pattern id=":S1:" width="20" height="20" patternUnits="userSpaceOnUse" patternContentUnits="userSpaceOnUse" x="0" y="0"><circle id="pattern-circle" cx="1" cy="1" r="1"></circle></pattern></defs><rect width="100%" height="100%" stroke-width="0" fill="url(#:S1:)"></rect></svg>            
+            <svg aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full fill-neutral-400/80 [mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]"><defs><pattern id=":S1:" width="20" height="20" patternUnits="userSpaceOnUse" patternContentUnits="userSpaceOnUse" x="0" y="0"><circle id="pattern-circle" cx="1" cy="1" r="1"></circle></pattern></defs><rect width="100%" height="100%" stroke-width="0" fill="url(#:S1:)"></rect></svg>
             <LoginForm />
           </div>
         </div>

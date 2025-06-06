@@ -13,12 +13,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import type { PersonPageable } from "@/model/PersonPageable";
 import { useEffect, useMemo, useState } from "react";
 import { UserDialogForm } from "./user-dialog-form";
-import type { Person } from "@/model/Person";
 import { Loader2Icon, Repeat1 } from "lucide-react";
-import { Input } from "./ui/input";
+import type { Person } from "@/model/Person";
 import debounce from "lodash.debounce";
-import Swal from "sweetalert2";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import Swal from "sweetalert2";
 
 export default function UserDataTable() {
     const [field, setField] = useState('');
