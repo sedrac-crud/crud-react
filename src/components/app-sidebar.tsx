@@ -12,6 +12,7 @@ import {
 import { Users2, HomeIcon } from "lucide-react"
 import { NavUser } from "./nav-user"
 import { NavLink } from "react-router-dom"
+import { AuthPersonDialogForm } from "./auth-dialog-form"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
@@ -36,6 +37,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             </NavLink>
                         </SidebarMenu>
                         <SidebarMenu>
+                            <AuthPersonDialogForm/>
                             <SidebarMenuItem>
                                 <SidebarMenuButton tooltip={"Utilizadores"}>
                                     <Users2 />

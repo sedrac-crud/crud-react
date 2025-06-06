@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 const handleDownload = () => {
   const link = document.createElement("a");
   link.href = "/public/app-release.apk";
-  link.setAttribute("download", "my-app.apk");
+  link.setAttribute("download", "crud_person.apk");
   document.body.appendChild(link);
   link.click();
   link.remove();

@@ -22,8 +22,9 @@ import {
     useSidebar,
 } from "@/components/ui/sidebar"
 import { useAuthStore } from "@/store/auth-person.store"
-import { LogOut, UserCircle } from "lucide-react"
+import { LogOut } from "lucide-react"
 import Swal from "sweetalert2"
+import { AuthPersonDialogForm } from "./auth-dialog-form"
 
 export function NavUser() {
     const person = useAuthStore(state => state.auth);
@@ -91,10 +92,7 @@ export function NavUser() {
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <UserCircle />
-                                Conta
-                            </DropdownMenuItem>
+                            <AuthPersonDialogForm />
                             <DropdownMenuSeparator />
                             <DropdownMenuItem className="text-red-500" onClick={confirmLogout}>
                                 <LogOut className="text-red-500" />
